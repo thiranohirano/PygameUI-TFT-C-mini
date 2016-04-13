@@ -16,12 +16,12 @@ import threading
 class StartScene(ui.Scene):
     def __init__(self):
         ui.Scene.__init__(self)
-        self.main_frame = ui.ObjectRectangle(
-            ui.window.rect)
-        self.main_frame.enabled = False
-        self.main_frame.border_color = mycolors.belize_hole
-        self.main_frame.border_widths = 9
-        self.add_child(self.main_frame)
+        # self.main_frame = ui.ObjectRectangle(
+        #     ui.window.rect)
+        # self.main_frame.enabled = False
+        # self.main_frame.border_color = mycolors.belize_hole
+        # self.main_frame.border_widths = 9
+        # self.add_child(self.main_frame)
 
         self.ip_label = ui.Label(ui.col_rect_mini(0, 0, 8, 1), self.get_ip())
         self.add_child(self.ip_label)

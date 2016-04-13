@@ -420,7 +420,7 @@ class TextInput():
         ''' Draw the cursor '''
         line = int(self.cursorpos / self.lineChars)  # line number
         if line > 1: line = 1
-        x = 4
+        x = 4 + self.x
         y = 4 + self.y + line * self.lineH
         # Calc width of text to this point
         if self.cursorpos > 0:

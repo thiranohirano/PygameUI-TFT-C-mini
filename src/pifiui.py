@@ -19,11 +19,11 @@ class PifiUI(ui.Scene):
         Constructor
         '''
         ui.Scene.__init__(self)
-        self.main_frame = ui.ObjectRectangle(ui.window.rect)
-        self.main_frame.enabled = False
-        self.main_frame.border_color = mycolors.belize_hole
-        self.main_frame.border_widths = 9
-        self.add_child(self.main_frame)
+        # self.main_frame = ui.ObjectRectangle(ui.window.rect)
+        # self.main_frame.enabled = False
+        # self.main_frame.border_color = mycolors.belize_hole
+        # self.main_frame.border_widths = 9
+        # self.add_child(self.main_frame)
         
         btn = ui.Button(ui.col_rect_mini(6, 5, 2, 1), 'Back')
         btn.on_clicked.connect(self.back)
@@ -77,6 +77,6 @@ class PifiUI(ui.Scene):
             self.show_process_message("Failed! Check WiFi password", 2)
 
     def generate_process(self):
-        self.pifi.generateEtcInterfaces()
+        # self.pifi.generateEtcInterfaces()
         self.pifi.generateWPASupplicant()
         self.pifi.reconnect()
