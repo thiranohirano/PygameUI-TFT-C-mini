@@ -34,7 +34,7 @@ class StartScene(ui.Scene):
         self.obj_r2.on_clicked.connect(self.hoge2)
         self.add_child(self.obj_r2)
 
-        self.obj_r4 = ui.Button(ui.col_rect_mini(4, 2, 3, 2), 'WiFi')
+        self.obj_r4 = ui.Button(ui.col_rect_mini(5, 1, 3, 2), 'WiFi')
         self.obj_r4.on_clicked.connect(self.wifi_button)
         self.add_child(self.obj_r4)
 
@@ -42,7 +42,7 @@ class StartScene(ui.Scene):
         self.reboot_btn.on_clicked.connect(self.reboot_button_click)
         self.add_child(self.reboot_btn)
 
-        self.shutdown_btn = ui.Button(ui.col_rect_mini(4, 4, 3, 2), 'Shutdown')
+        self.shutdown_btn = ui.Button(ui.col_rect_mini(5, 4, 3, 2), 'Shutdown')
         self.shutdown_btn.on_clicked.connect(self.shutdown_button_click)
         self.add_child(self.shutdown_btn)
 
