@@ -25,7 +25,7 @@ class PifiUI(ui.Scene):
         # self.main_frame.border_widths = 9
         # self.add_child(self.main_frame)
         
-        btn = ui.Button(ui.col_rect_mini(6, 5, 2, 1), 'Back')
+        btn = ui.Button(ui.col_rect_mini(7, 0, 1, 1), 'X')
         btn.on_clicked.connect(self.back)
         self.add_child(btn)
         
