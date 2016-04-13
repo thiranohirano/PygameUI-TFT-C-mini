@@ -26,15 +26,15 @@ class StartScene(ui.Scene):
         self.ip_label = ui.Label(ui.col_rect_mini(0, 0, 8, 1), self.get_ip())
         self.add_child(self.ip_label)
 
-        self.obj_r = ui.Button(ui.col_rect_mini(0, 1, 3, 2), 'Proc')
+        self.obj_r = ui.Button(ui.col_rect_mini(0, 1, 3, 1), 'Proc')
         self.obj_r.on_clicked.connect(self.hoge)
         self.add_child(self.obj_r)
 
-        self.obj_r2 = ui.Button(ui.col_rect_mini(3, 1, 3, 2), 'vkey')
+        self.obj_r2 = ui.Button(ui.col_rect_mini(0, 2, 3, 1), 'vkey')
         self.obj_r2.on_clicked.connect(self.hoge2)
         self.add_child(self.obj_r2)
 
-        self.obj_r4 = ui.Button(ui.col_rect_mini(3, 2, 3, 2), 'WiFi')
+        self.obj_r4 = ui.Button(ui.col_rect_mini(4, 2, 3, 2), 'WiFi')
         self.obj_r4.on_clicked.connect(self.wifi_button)
         self.add_child(self.obj_r4)
 
@@ -42,7 +42,7 @@ class StartScene(ui.Scene):
         self.reboot_btn.on_clicked.connect(self.reboot_button_click)
         self.add_child(self.reboot_btn)
 
-        self.shutdown_btn = ui.Button(ui.col_rect_mini(3, 4, 3, 2), 'Shutdown')
+        self.shutdown_btn = ui.Button(ui.col_rect_mini(4, 4, 3, 2), 'Shutdown')
         self.shutdown_btn.on_clicked.connect(self.shutdown_button_click)
         self.add_child(self.shutdown_btn)
 
@@ -110,4 +110,3 @@ class StartScene(ui.Scene):
         print 'hoge'
         time.sleep(3)
         print 'hoge'
-        self.add_child(self.obj_r3)
