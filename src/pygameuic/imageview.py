@@ -23,7 +23,7 @@ class ImageView(object_rectangle.ObjectRectangle):
 
     @property
     def image(self):
-        return  self._image
+        return self._image
 
     @image.setter
     def image(self, new_image):
@@ -40,7 +40,6 @@ class ImageView(object_rectangle.ObjectRectangle):
             return False
 
         self.render()
-        #self.surface = self._image
         self.surface.blit(self._image, (0, 0))
 
         return True

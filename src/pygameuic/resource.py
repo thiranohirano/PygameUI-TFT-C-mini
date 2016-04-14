@@ -60,6 +60,9 @@ def scale_image(image, size):
 
 def get_sound(name):
     class NoSound:
+        def __init__(self):
+            pass
+
         def play(self):
             pass
 

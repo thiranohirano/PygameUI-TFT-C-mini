@@ -26,26 +26,28 @@ STRING_LIST_ITEM_CLASS = 'StringListItem'
 PROCESS_SPINNER_CLASS = 'ProcessSpinner'
 VIRTUAL_KEYBOARD_CLASS = 'VirtualKeyboard'
 
+
 class Theme(object):
     '''
     classdocs
     '''
+
     def __init__(self):
         '''
         Constructor
         '''
         self.styles = {}
-        
+
     def set(self, class_name, key, value):
         self.styles.setdefault(class_name, {})
         self.styles[class_name][key] = value
-        
+
     def get_dict(self, obj, base_name=OBJECT_RECTANGLE_CLASS):
         classes = []
         klass = obj.__class__
         while True:
             classes.append(klass)
-#             print klass.__name__
+            #             print klass.__name__
             if klass.__name__ == base_name:
                 break
             klass = klass.__bases__[0]
@@ -56,13 +58,15 @@ class Theme(object):
                 style = self.styles[class_name]
             except KeyError:
                 style = {}
-                
+
             re_style = dict(chain(style.iteritems(), re_style.iteritems()))
-            
+
         return re_style
-        
+
+
 default_theme = Theme()
 current = None
+
 
 def init_default_theme():
     default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
@@ -77,23 +81,23 @@ def init_default_theme():
     default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=BORDER_COLOR_KEY,
                       value=None)
-    
+
     default_theme.set(class_name=LABEL_CLASS,
-                    key=TEXT_COLOR_KEY,
-                    value=white_color)
+                      key=TEXT_COLOR_KEY,
+                      value=white_color)
     default_theme.set(class_name=LABEL_CLASS,
-                    key=SELECT_TEXT_COLOR_KEY,
-                    value=dark_gray_color)
+                      key=SELECT_TEXT_COLOR_KEY,
+                      value=dark_gray_color)
     default_theme.set(class_name=LABEL_CLASS,
-                    key=PADDING_KEY,
-                    value=(6, 6))
+                      key=PADDING_KEY,
+                      value=(6, 6))
     default_theme.set(class_name=LABEL_CLASS,
-                    key=BORDER_WIDTHS_KEY,
-                    value=None)
+                      key=BORDER_WIDTHS_KEY,
+                      value=None)
     default_theme.set(class_name=LABEL_CLASS,
-                    key=FONT_KEY,
-                    value=pygame.font.SysFont('Courier New', 22))
-    
+                      key=FONT_KEY,
+                      value=pygame.font.SysFont('Courier New', 22))
+
     default_theme.set(class_name=BUTTON_CLASS,
                       key=BACKGROUND_COLOR_KEY,
                       value=black_color)
@@ -107,15 +111,15 @@ def init_default_theme():
                       key=BORDER_COLOR_KEY,
                       value=white_color)
     default_theme.set(class_name=BUTTON_CLASS,
-                    key=TEXT_COLOR_KEY,
-                    value=white_color)
+                      key=TEXT_COLOR_KEY,
+                      value=white_color)
     default_theme.set(class_name=BUTTON_CLASS,
-                    key=SELECT_TEXT_COLOR_KEY,
-                    value=dark_gray_color)
+                      key=SELECT_TEXT_COLOR_KEY,
+                      value=dark_gray_color)
     default_theme.set(class_name=BUTTON_CLASS,
-                    key=FONT_KEY,
-                    value=pygame.font.SysFont('Courier New', 20, bold=True))
-    
+                      key=FONT_KEY,
+                      value=pygame.font.SysFont('Courier New', 20, bold=True))
+
     default_theme.set(class_name=STRING_LIST_VIEW_CLASS,
                       key=BACKGROUND_COLOR_KEY,
                       value=dark_gray_color)
@@ -128,10 +132,11 @@ def init_default_theme():
     default_theme.set(class_name=STRING_LIST_VIEW_CLASS,
                       key=BORDER_COLOR_KEY,
                       value=white_color)
-    
+
     default_theme.set(class_name=STRING_LIST_ITEM_CLASS,
                       key=FONT_KEY,
                       value=pygame.font.SysFont('Courier New', 20, bold=True))
+
 
 def use_theme(theme):
     """Make the given theme current.
@@ -142,8 +147,7 @@ def use_theme(theme):
 #     import scene
 #     if scene.current is not None:
 #         scene.current.stylize()
-        
+
 def init():
     init_default_theme()
     use_theme(default_theme)
-        

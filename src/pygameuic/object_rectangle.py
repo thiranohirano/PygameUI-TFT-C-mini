@@ -1,22 +1,18 @@
-'''
+"""
 Created on 2016/03/03
 
 @author: hirano
-'''
+"""
 import pygame
 
 import callback  # @UnresolvedImport
 import theme  # @UnresolvedImport
 import kvc  # @UnresolvedImport
 
+
 class ObjectRectangle(object):
-    '''
-    classdocs
-    '''
+
     def __init__(self, rect):
-        '''
-        Constructor
-        '''
         self.rect = rect
         self.background_color = None
         self.select_background_color = None
@@ -27,40 +23,39 @@ class ObjectRectangle(object):
         self.enabled = True
         self.dirty = True
         self.surface = pygame.Surface((self.rect.w, self.rect.h)).convert()
-        
+
         self.on_mouse_up = callback.Signal()
         self.on_mouse_down = callback.Signal()
-        
+
     def mouse_up(self, point):
         self.on_mouse_up(self, point)
 
     def mouse_down(self, point):
         self.on_mouse_down(self, point)
-        
+
     def stylise(self):
         style = theme.current.get_dict(self)
         for key, val in style.iteritems():
             kvc.set_value_for_keypath(self, key, val)
-        
+
     def _draw(self, screen):
         if not self.dirty: return False
         if self.selected:
-            if self.select_background_color <> None:
+            if self.select_background_color is not None:
                 self.surface.fill(self.select_background_color)
         else:
-            if self.background_color <> None:
+            if self.background_color is not None:
                 self.surface.fill(self.background_color)
-        
-        if self.border_color <> None and self.border_widths <> None:
-            pygame.draw.rect(self.surface, self.border_color, (0, 0 , self.rect.w, self.rect.h), self.border_widths)
-            
+
+        if self.border_color is not None and self.border_widths is not None:
+            pygame.draw.rect(self.surface, self.border_color, (0, 0, self.rect.w, self.rect.h), self.border_widths)
+
         self.dirty = False
         return True
-    
+
     def draw_blit(self, screen):
         if self._draw(screen):
             screen.blit(self.surface, (self.rect.x, self.rect.y))
             return True
-        
+
         return False
-        

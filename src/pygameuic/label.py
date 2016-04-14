@@ -6,7 +6,7 @@ Created on 2016/03/04
 import re
 import object_rectangle  # @UnresolvedImport
 import pygame
-from pygameuic.colors import white_color, dark_gray_color
+from colors import white_color, dark_gray_color
 
 CENTER = 0
 LEFT = 1
@@ -16,15 +16,11 @@ BOTTOM = 4
 
 WORD_WRAP = 0
 CLIP = 1
+
+
 class Label(object_rectangle.ObjectRectangle):
-    '''
-    classdocs
-    '''
     def __init__(self, rect, text, halign=CENTER, valign=CENTER,
                  wrap=CLIP):
-        '''
-        Constructor
-        '''
         self.font = pygame.font.SysFont('Courier New', 24)
         self.text_color = white_color
         self.select_text_color = dark_gray_color
@@ -35,20 +31,20 @@ class Label(object_rectangle.ObjectRectangle):
         self._wrap_mode = wrap
         self._text = text
         self.enabled = False
-        
+
     @property
     def text(self):
         return self._text
-    
+
     @text.setter
     def text(self, text):
-        self._text = text  #unicode(text, "utf-8")
+        self._text = text  # unicode(text, "utf-8")
         self.dirty = True
-    
+
     def render(self):
         """Force (re)draw the text to cached surfaces.
         """
-        
+
         self._render(self._text)
 
     def _render(self, text):
@@ -62,7 +58,7 @@ class Label(object_rectangle.ObjectRectangle):
         text = text.replace("\r\n", "\n").replace("\r", "\n")
 
         if self._wrap_mode == CLIP:
-            self._text = re.sub(r'[\n\t]{2, }', ' ', text)
+            self._text = re.sub(r'[\n\t]{2,}', ' ', text)
             self.text_size = self._render_line(self._text)
         elif self._wrap_mode == WORD_WRAP:
             self._render_word_wrapped(text)
@@ -74,7 +70,7 @@ class Label(object_rectangle.ObjectRectangle):
             text_color = self.select_text_color
         text_surface = self.font.render(line_text, True, text_color)
         self.text_surfaces.append(text_surface)
-        
+
         return text_surface.get_size()
 
     def _render_word_wrapped(self, text):
@@ -112,7 +108,7 @@ class Label(object_rectangle.ObjectRectangle):
             line_size = self._render_line(''.join(line_tokens))
             self.text_size[0] = max(self.text_size[0], line_size[0])
             self.text_size[1] += line_size[1]
-            
+
     def _determine_top(self):
         if self.valign == TOP:
             y = self.padding[1]
@@ -131,11 +127,11 @@ class Label(object_rectangle.ObjectRectangle):
         elif self.halign == RIGHT:
             x = self.rect.w - 1 - self.padding[0] - w
         return x
-    
+
     def _draw(self, screen):
         if not object_rectangle.ObjectRectangle._draw(self, screen) or not self._text:
             return False
-        
+
         self.render()
         y = self._determine_top()
         for text_surface in self.text_surfaces:
@@ -143,5 +139,5 @@ class Label(object_rectangle.ObjectRectangle):
 
             self.surface.blit(text_surface, (x, y))
             y += text_surface.get_size()[1]
-        
+
         return True

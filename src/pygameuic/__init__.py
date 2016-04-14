@@ -13,6 +13,7 @@ from scene import Scene  # @UnresolvedImport
 import scene  # @UnresolvedImport
 import window  # @UnresolvedImport
 import theme  # @Reimport @UnresolvedImport
+import colors
 
 Rect = pygame.Rect
 window_surface = None
@@ -77,6 +78,8 @@ def run():
         scene.current.run()
         scene.current.displayUpdate()
         if ui_quit:
+            window_surface.fill(colors.black_color)
+            pygame.display.update()
             scene.current.closed()
             pygame.quit()
             import sys

@@ -29,8 +29,6 @@ def pop():
         
 
 class Scene(object):
-    """A view that takes up the entire window content area."""
-
     def __init__(self):
         self.window_surface = None
         self.surface = pygame.Surface(window.rect.size, pygame.SRCALPHA, 32)
@@ -44,7 +42,7 @@ class Scene(object):
 
     def run(self):
         events = pygame.event.get() 
-        if events <> None:
+        if events is not None:
             for e in events:
                 if e.type == MOUSEBUTTONDOWN:
                     self._unselectall()
@@ -113,7 +111,7 @@ class Scene(object):
     
     def displayUpdate(self):
         flag = self._draw()
-        if flag == True:
+        if flag:
             self.window_surface.blit(self.surface, (0, 0))
             pygame.display.update()
             print 'update'

@@ -98,9 +98,12 @@ class StartScene(ui.Scene):
 
     def shutdown_button_click(self, btn):
         self.show_process_message("Shutdown...", 2)
-        threading.Timer(1, self.shutdown_process).start()
+        threading.Timer(2, self.shutdown_process).start()
         #         self.add_fullscreen_label("Shutdown...")
         ui.quit()
+        command = "/usr/bin/sudo service lightdm stop"
+        process = Popen(command.split(), stdout=PIPE)
+        output = process.communicate()[0]
 
     def add_fullscreen_label(self, text):
         label = ui.Label(ui.col_rect(0, 0, 12, 8), text)
