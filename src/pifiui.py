@@ -36,7 +36,7 @@ class PifiUI(ui.Scene):
         scan_label = ui.Label(ui.col_rect_mini(1, 0, 6, 1), 'Select WiFi network...')
         self.add_child(scan_label)
         
-        self.ap_listview = ui.StringListView(ui.col_rect_mini(1, 1, 6, 4), [])
+        self.ap_listview = ui.StringListView(ui.col_rect_mini(1, 1, 6, 4), [], row_num=4)
         # self.ap_listview.items_font = pygame.font.SysFont('Courier New', 20, bold=True)
         self.ap_listview.on_selected.connect(self.ap_selected)
         self.add_child(self.ap_listview)
