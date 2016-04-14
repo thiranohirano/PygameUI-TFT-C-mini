@@ -11,6 +11,7 @@ import pygameuic  as ui  # @UnresolvedImport
 import socket
 from subprocess import PIPE, Popen
 import threading
+import os
 
 class StartScene(ui.Scene):
     def __init__(self):
@@ -47,12 +48,14 @@ class StartScene(ui.Scene):
 
         self.stop_flag = False
 
-        self.power_image = pygame.image.load("appbar.power.png").convert_alpha()
+        scriptdir = os.path.dirname(os.path.abspath(__file__))
+        print scriptdir
+        self.power_image = pygame.image.load(os.path.join(scriptdir, "appbar.power.png")).convert_alpha()
         self.shutdown_img_btn = ui.ImageButton(ui.col_rect_mini(7, 5, 1, 1, margin=1), self.power_image)
         self.shutdown_img_btn.on_clicked.connect(self.shutdown_button_click)
         self.add_child(self.shutdown_img_btn)
 
-        self.refresh_image = pygame.image.load("appbar.refresh.png").convert_alpha()
+        self.refresh_image = pygame.image.load(os.path.join(scriptdir, "appbar.refresh.png")).convert_alpha()
         self.reboot_img_btn = ui.ImageButton(ui.col_rect_mini(0, 5, 1, 1, margin=1), self.refresh_image)
         self.reboot_img_btn.on_clicked.connect(self.reboot_button_click)
         self.add_child(self.reboot_img_btn)
