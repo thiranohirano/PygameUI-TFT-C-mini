@@ -12,6 +12,7 @@ import socket
 from subprocess import PIPE, Popen
 import threading
 import os
+import datetime
 
 class StartScene(ui.Scene):
     def __init__(self):
@@ -26,11 +27,18 @@ class StartScene(ui.Scene):
         self.ip_label = ui.Label(ui.col_rect_mini(0, 0, 8, 1), self.get_ip())
         self.add_child(self.ip_label)
 
-        self.obj_r = ui.Button(ui.col_rect_mini(0, 1, 3, 1), 'Proc')
+        self.date_label = ui.Label(ui.col_rect_mini(0, 1, 5, 1), '')
+        self.add_child(self.date_label)
+
+        self.time_label = ui.Label(ui.col_rect_mini(0, 2, 5, 2), '')
+        self.time_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 48)
+        self.add_child(self.time_label)
+
+        self.obj_r = ui.Button(ui.col_rect_mini(5, 3, 3, 1), 'Proc')
         self.obj_r.on_clicked.connect(self.hoge)
         self.add_child(self.obj_r)
 
-        self.obj_r2 = ui.Button(ui.col_rect_mini(0, 2, 3, 1), 'vkey')
+        self.obj_r2 = ui.Button(ui.col_rect_mini(5, 4, 3, 1), 'vkey')
         self.obj_r2.on_clicked.connect(self.hoge2)
         self.add_child(self.obj_r2)
 
@@ -63,9 +71,14 @@ class StartScene(ui.Scene):
 
     def loaded(self):
         self.ip_label.text = self.get_ip()
+        datetime_now = datetime.datetime.now()
+        self.date_label.text = datetime_now.strftime('%Y/%m/%d')
+        self.time_label.text = datetime_now.strftime('%H:%M')
         self.stop_flag = False
         ip_timer = threading.Timer(2, self.show_ip)
         ip_timer.start()
+        datetime_timer = threading.Timer(1, self.show_datetime)
+        datetime_timer.start()
         print "loaded"
 
     def closed(self):
@@ -78,8 +91,13 @@ class StartScene(ui.Scene):
             ip_timer = threading.Timer(2, self.show_ip)
             ip_timer.start()
 
-    def image_click(self, obj):
-        print "click"
+    def show_datetime(self):
+        datetime_now = datetime.datetime.now()
+        self.date_label.text = datetime_now.strftime('%Y/%m/%d')
+        self.time_label.text = datetime_now.strftime('%H:%M')
+        if not self.stop_flag:
+            datetime_timer = threading.Timer(1, self.show_datetime)
+            datetime_timer.start()
 
     def hoge(self, obj):
         self.show_process_spinner(self.search_process, 'Scanning for WiFi networks...')
@@ -93,30 +111,23 @@ class StartScene(ui.Scene):
         ui.use_scene(1)
 
     def reboot_button_click(self, btn):
-        #         self.add_fullscreen_label("Reboot...")
         self.show_process_message("Reboot...", 2)
         ui.quit()
 
     def shutdown_button_click(self, btn):
         self.show_process_message("Shutdown...", 2)
         threading.Timer(2, self.shutdown_process).start()
-        #         self.add_fullscreen_label("Shutdown...")
         ui.quit()
         command = "/usr/bin/sudo service lightdm stop"
         process = Popen(command.split(), stdout=PIPE)
         output = process.communicate()[0]
 
-    def add_fullscreen_label(self, text):
-        label = ui.Label(ui.col_rect(0, 0, 12, 8), text)
-        label.font = pygame.font.SysFont('Courier New', 28, bold=True)
-        self.add_child(label)
-        return label
-
     def shutdown_process(self):
         self.shutdown()
 
     # Get Your External IP Address
-    def get_ip(self):
+    @staticmethod
+    def get_ip():
         ip_msg = "Not connected"
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -128,23 +139,23 @@ class StartScene(ui.Scene):
         return ip_msg
 
     # Restart Raspberry Pi
-    def restart(self):
+    @staticmethod
+    def restart():
         command = "/usr/bin/sudo /sbin/shutdown -r now"
         process = Popen(command.split(), stdout=PIPE)
         output = process.communicate()[0]
         return output
 
-    def dummyrestart(self):
-        time.sleep(1)
-
     # Shutdown Raspberry Pi
-    def shutdown(self):
+    @staticmethod
+    def shutdown():
         command = "/usr/bin/sudo /sbin/shutdown -h now"
         process = Popen(command.split(), stdout=PIPE)
         output = process.communicate()[0]
         return output
 
-    def search_process(self):
+    @staticmethod
+    def search_process():
         print 'hoge'
         time.sleep(3)
         print 'hoge'
