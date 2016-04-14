@@ -27,10 +27,11 @@ class StartScene(ui.Scene):
         self.ip_label = ui.Label(ui.col_rect_mini(0, 0, 8, 1), self.get_ip())
         self.add_child(self.ip_label)
 
-        self.date_label = ui.Label(ui.col_rect_mini(0, 1, 5, 1), '')
+        self.date_label = ui.Label(ui.col_rect_mini(0, 1, 5, 1, padding=2), '', halign=ui.LEFT)
+        self.date_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 24)
         self.add_child(self.date_label)
 
-        self.time_label = ui.Label(ui.col_rect_mini(0, 2, 5, 2), '')
+        self.time_label = ui.Label(ui.col_rect_mini(0, 2, 5, 2), '', halign=ui.LEFT)
         self.time_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 48)
         self.add_child(self.time_label)
 
