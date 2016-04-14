@@ -65,8 +65,8 @@ def col_rect(col, row, col_span, row_span, margin=5):
     return window.col_rect(col, row, col_span, row_span, margin)
 
 
-def col_rect_mini(col, row, col_span, row_span, margin=5):
-    return window.col_rect_mini(col, row, col_span, row_span, margin)
+def col_rect_mini(col, row, col_span, row_span, margin=5, padding=5):
+    return window.col_rect_mini(col, row, col_span, row_span, margin, padding)
     
 def run():
     assert len(scene.stack) > 0
