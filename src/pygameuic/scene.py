@@ -4,7 +4,8 @@ from pygame.constants import MOUSEBUTTONDOWN, MOUSEBUTTONUP
 import window  # @UnresolvedImport
 from process_spinner import ProcessSpinner  # @UnresolvedImport
 from virtualKeyboard import VirtualKeyboard  # @UnresolvedImport
-from pygameuic.colors import black_color
+from colors import black_color  # @UnresolvedImport
+import callback
 import time
 
 stack = []
@@ -34,6 +35,12 @@ class Scene(object):
         self.window_surface = None
         self.surface = pygame.Surface(window.rect.size, pygame.SRCALPHA, 32)
         self.children = []
+
+    def loaded(self):
+        pass
+
+    def closed(self):
+        pass
 
     def run(self):
         events = pygame.event.get() 

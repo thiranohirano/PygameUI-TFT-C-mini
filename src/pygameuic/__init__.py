@@ -25,8 +25,11 @@ class SceneManager(object):
         self.scenes.append(scene)
         
     def use_scene(self, index):
+        if scene.current is not None:
+            scene.current.closed()
         scene.pop()
         scene.push(self.scenes[index])
+        scene.current.loaded()
         scene.current.__class__.__class__.__name__
         
 scene_manager = SceneManager()

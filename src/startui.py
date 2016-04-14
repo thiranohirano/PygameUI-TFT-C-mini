@@ -12,7 +12,6 @@ import socket
 from subprocess import PIPE, Popen
 import threading
 
-
 class StartScene(ui.Scene):
     def __init__(self):
         ui.Scene.__init__(self)
@@ -45,6 +44,25 @@ class StartScene(ui.Scene):
         self.shutdown_btn = ui.Button(ui.col_rect_mini(5, 4, 3, 2), 'Shutdown')
         self.shutdown_btn.on_clicked.connect(self.shutdown_button_click)
         self.add_child(self.shutdown_btn)
+
+        self.stop_flag = False
+
+    def loaded(self):
+        self.ip_label.text = self.get_ip()
+        self.stop_flag = False
+        ip_timer = threading.Timer(2, self.show_ip)
+        ip_timer.start()
+        print "loaded"
+
+    def closed(self):
+        self.stop_flag = True
+        print "closed"
+
+    def show_ip(self):
+        self.ip_label.text = self.get_ip()
+        if not self.stop_flag:
+            ip_timer = threading.Timer(2, self.show_ip)
+            ip_timer.start()
 
     def hoge(self, obj):
         self.show_process_spinner(self.search_process, 'Scanning for WiFi networks...')
