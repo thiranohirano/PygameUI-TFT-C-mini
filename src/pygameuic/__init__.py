@@ -4,6 +4,8 @@ from object_rectangle import *
 from label import *
 from button import *
 from stringlistview import *
+from imageview import *
+from imagebutton import *
 from callback import *
 from virtualKeyboard import *
 from process_spinner import *

@@ -3,7 +3,7 @@ Created on 2016/03/04
 
 @author: hirano
 '''
-from pygameuic.colors import black_color, white_color, dark_gray_color, \
+from colors import black_color, white_color, dark_gray_color, \
     gray_color
 from itertools import chain
 import pygame

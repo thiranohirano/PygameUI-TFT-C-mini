@@ -37,15 +37,25 @@ class StartScene(ui.Scene):
         self.obj_r4.on_clicked.connect(self.wifi_button)
         self.add_child(self.obj_r4)
 
-        self.reboot_btn = ui.Button(ui.col_rect_mini(0, 4, 3, 2), 'Reboot')
-        self.reboot_btn.on_clicked.connect(self.reboot_button_click)
-        self.add_child(self.reboot_btn)
+        # self.reboot_btn = ui.Button(ui.col_rect_mini(0, 4, 3, 2), 'Reboot')
+        # self.reboot_btn.on_clicked.connect(self.reboot_button_click)
+        # self.add_child(self.reboot_btn)
 
-        self.shutdown_btn = ui.Button(ui.col_rect_mini(5, 4, 3, 2), 'Shutdown')
-        self.shutdown_btn.on_clicked.connect(self.shutdown_button_click)
-        self.add_child(self.shutdown_btn)
+        # self.shutdown_btn = ui.Button(ui.col_rect_mini(5, 4, 3, 2), 'Shutdown')
+        # self.shutdown_btn.on_clicked.connect(self.shutdown_button_click)
+        # self.add_child(self.shutdown_btn)
 
         self.stop_flag = False
+
+        self.power_image = pygame.image.load("appbar.power.png").convert_alpha()
+        self.shutdown_img_btn = ui.ImageButton(ui.col_rect_mini(7, 5, 1, 1), self.power_image)
+        self.shutdown_img_btn.on_clicked.connect(self.shutdown_button_click)
+        self.add_child(self.shutdown_img_btn)
+
+        self.refresh_image = pygame.image.load("appbar.refresh.png").convert_alpha()
+        self.reboot_img_btn = ui.ImageButton(ui.col_rect_mini(0, 5, 1, 1), self.refresh_image)
+        self.reboot_img_btn.on_clicked.connect(self.reboot_button_click)
+        self.add_child(self.reboot_img_btn)
 
     def loaded(self):
         self.ip_label.text = self.get_ip()
@@ -63,6 +73,9 @@ class StartScene(ui.Scene):
         if not self.stop_flag:
             ip_timer = threading.Timer(2, self.show_ip)
             ip_timer.start()
+
+    def image_click(self, obj):
+        print "click"
 
     def hoge(self, obj):
         self.show_process_spinner(self.search_process, 'Scanning for WiFi networks...')
