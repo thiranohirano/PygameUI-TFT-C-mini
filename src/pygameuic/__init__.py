@@ -77,7 +77,7 @@ def run():
         scene.current.run()
         scene.current.displayUpdate()
         if ui_quit:
-            scene.pop()
+            scene.current.closed()
             pygame.quit()
             import sys
             sys.exit()
