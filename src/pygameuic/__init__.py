@@ -37,13 +37,14 @@ class SceneManager(object):
         
 scene_manager = SceneManager()
 
-def init(name=' ', window_size=(480, 320)):
+def init(name=' ', window_size=(480, 320), mouse=True):
     pygame.init()
     global window_surface
     window_surface = pygame.display.set_mode(window_size)
     pygame.display.set_caption(name)
     window.rect = pygame.Rect((0, 0), window_size)
     theme.init()
+    pygame.mouse.set_visible(mouse)
     
 def quit():
     global ui_quit

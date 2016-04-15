@@ -17,13 +17,15 @@ import mytheme
 
 if __name__ == '__main__':
     param = sys.argv
+    mouse_flag = True
     if len(param) > 1:
         if param[1] == "-tft":
             os.putenv('SDL_FBDEV', '/dev/fb1')
             os.putenv('SDL_MOUSEDRV', 'TSLIB')
             os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
-            pygame.mouse.set_visible(False)
-    ui.init('pygameui ', (320, 240))
+            mouse_flag = False
+
+    ui.init('pygameui ', (320, 240), mouse_flag)
 #     pygame.mouse.set_visible(False)
     mytheme.set_theme()
     ui.append_scene(startui.StartScene())
