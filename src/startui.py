@@ -17,18 +17,12 @@ import datetime
 class StartScene(ui.Scene):
     def __init__(self):
         ui.Scene.__init__(self)
-        # self.main_frame = ui.ObjectRectangle(
-        #     ui.window.rect)
-        # self.main_frame.enabled = False
-        # self.main_frame.border_color = mycolors.belize_hole
-        # self.main_frame.border_widths = 9
-        # self.add_child(self.main_frame)
 
         self.ip_label = ui.Label(ui.col_rect_mini(0, 0, 8, 1), self.get_ip())
         self.add_child(self.ip_label)
 
         self.date_label = ui.Label(ui.col_rect_mini(0, 1, 5, 1, padding=2), '', halign=ui.LEFT)
-        self.date_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 24)
+        self.date_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 20)
         self.add_child(self.date_label)
 
         self.time_label = ui.Label(ui.col_rect_mini(0, 2, 5, 2), '', halign=ui.LEFT)
@@ -71,15 +65,9 @@ class StartScene(ui.Scene):
         self.add_child(self.change_lxde_img_btn)
 
     def loaded(self):
-        self.ip_label.text = self.get_ip()
-        datetime_now = datetime.datetime.now()
-        self.date_label.text = datetime_now.strftime('%Y/%m/%d')
-        self.time_label.text = datetime_now.strftime('%H:%M')
         self.stop_flag = False
-        ip_timer = threading.Timer(2, self.show_ip)
-        ip_timer.start()
-        datetime_timer = threading.Timer(1, self.show_datetime)
-        datetime_timer.start()
+        self.show_ip()
+        self.show_datetime()
         print "loaded"
 
     def closed(self):
@@ -94,7 +82,7 @@ class StartScene(ui.Scene):
 
     def show_datetime(self):
         datetime_now = datetime.datetime.now()
-        self.date_label.text = datetime_now.strftime('%Y/%m/%d')
+        self.date_label.text = datetime_now.strftime('%Y/%m/%d[%a]')
         self.time_label.text = datetime_now.strftime('%H:%M')
         if not self.stop_flag:
             datetime_timer = threading.Timer(1, self.show_datetime)
