@@ -65,6 +65,7 @@ class StartScene(ui.Scene):
         self.add_child(self.change_lxde_img_btn)
 
     def loaded(self):
+        ui.Scene.loaded(self)
         self.stop_flag = False
         self.show_ip()
         self.show_datetime()

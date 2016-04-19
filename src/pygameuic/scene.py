@@ -1,6 +1,6 @@
 import pygame
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEBUTTONUP
-
+from pygame.locals import USEREVENT
 import window  # @UnresolvedImport
 from process_spinner import ProcessSpinner  # @UnresolvedImport
 from virtualKeyboard import VirtualKeyboard  # @UnresolvedImport
@@ -11,6 +11,7 @@ import time
 stack = []
 current = None
 
+SCREEN_SAVER_ONE_MINUTE = 1 * 60
 
 def push(scene):
     global current
@@ -33,9 +34,13 @@ class Scene(object):
         self.window_surface = None
         self.surface = pygame.Surface(window.rect.size, pygame.SRCALPHA, 32)
         self.children = []
+        self.minutes = 0
+        self.screen_saver = False
+        self.screen_saver_time = SCREEN_SAVER_ONE_MINUTE
 
     def loaded(self):
-        pass
+        self.minutes = 0
+        self.screen_saver = False
 
     def closed(self):
         pass
@@ -44,25 +49,38 @@ class Scene(object):
         events = pygame.event.get() 
         if events is not None:
             for e in events:
+                if e.type == USEREVENT + 1:
+                    if not self.screen_saver:
+                        self.minutes += 1
                 if e.type == MOUSEBUTTONDOWN:
-                    self._unselectall()
-                    pos = pygame.mouse.get_pos()
-                    self._selectatmouse(pos)
-                    hit_object = self._hit_object(pos)
-                    if hit_object is not None:
-                        hit_object.mouse_down(pos)
-                    self.event_mousedown(pos)
+                    if not self.screen_saver:
+                        self._unselectall()
+                        pos = pygame.mouse.get_pos()
+                        self._selectatmouse(pos)
+                        hit_object = self._hit_object(pos)
+                        if hit_object is not None:
+                            hit_object.mouse_down(pos)
+                        self.event_mousedown(pos)
                 if e.type == MOUSEBUTTONUP:
-                    self._unselectall()
-                    pos = pygame.mouse.get_pos()
-                    hit_object = self._hit_object(pos)
-                    if hit_object is not None:
-                        hit_object.mouse_up(pos)
-                    self.event_mouseup(pos)
+                    if not self.screen_saver:
+                        self._unselectall()
+                        pos = pygame.mouse.get_pos()
+                        hit_object = self._hit_object(pos)
+                        if hit_object is not None:
+                            hit_object.mouse_up(pos)
+                        self.event_mouseup(pos)
+                    else:
+                        self.minutes = 0
+                        self.screen_saver = False
+                        self.all_dirty_item()
                 if e.type == pygame.QUIT:
                     pygame.quit()
-                    import  sys
+                    import sys
                     sys.exit()
+        if self.minutes >= self.screen_saver_time:
+            self.screen_saver = True
+            self.window_surface.fill(black_color)
+            pygame.display.update()
         
     def event_mousedown(self, pos):
         pass
@@ -79,7 +97,7 @@ class Scene(object):
         return vk.run(text)
     
     def show_process_message(self, title='', sleep_time=1):
-        self.show_process_spinner(lambda:time.sleep(sleep_time), title)
+        self.show_process_spinner(lambda: time.sleep(sleep_time), title)
         
     def add_child(self, item):
         assert item is not None
@@ -111,7 +129,7 @@ class Scene(object):
     
     def displayUpdate(self):
         flag = self._draw()
-        if flag:
+        if flag and not self.screen_saver:
             self.window_surface.blit(self.surface, (0, 0))
             pygame.display.update()
             print 'update'

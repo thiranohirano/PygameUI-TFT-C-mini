@@ -76,7 +76,7 @@ def col_rect_mini(col, row, col_span, row_span, margin=5, padding=5):
 def run():
     assert len(scene.stack) > 0
     clock = pygame.time.Clock()
-    
+    pygame.time.set_timer(USEREVENT + 1, 1000)
     while True:
         clock.tick(20)
         scene.current.run()
