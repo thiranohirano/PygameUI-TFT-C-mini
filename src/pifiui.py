@@ -77,6 +77,6 @@ class PifiUI(ui.Scene):
             self.show_process_message("Failed! Check WiFi password", 2)
 
     def generate_process(self):
-        # self.pifi.generateEtcInterfaces()
+        self.pifi.generateEtcInterfaces()
         self.pifi.generateWPASupplicant()
         self.pifi.reconnect()
