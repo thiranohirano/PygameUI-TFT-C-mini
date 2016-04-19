@@ -36,7 +36,7 @@ class Scene(object):
         self.children = []
         self.minutes = 0
         self.screen_saver = False
-        self.screen_saver_time = SCREEN_SAVER_ONE_MINUTE
+        self.screen_saver_time = SCREEN_SAVER_ONE_MINUTE * 5
 
     def loaded(self):
         self.minutes = 0
