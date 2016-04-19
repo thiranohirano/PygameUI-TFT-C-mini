@@ -18,12 +18,12 @@ if __name__ == '__main__':
     if len(param) > 1:
         for arg_param in param:
             if arg_param == "-tft":
-                mouse_flag = False
-                fullscreen = True
-            if arg_param == "-startup":
                 os.putenv('SDL_FBDEV', '/dev/fb1')
                 os.putenv('SDL_MOUSEDRV', 'TSLIB')
                 os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
+                mouse_flag = False
+            if arg_param == "-full":
+                fullscreen = True
 
     ui.init('pygameui ', (320, 240), mouse_flag, fullscreen)
     mytheme.set_theme()
