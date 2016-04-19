@@ -66,9 +66,9 @@ class StartScene(ui.Scene):
         self.add_child(self.shutdown_img_btn)
 
         self.refresh_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.refresh.png")).convert_alpha()
-        self.reboot_img_btn = ui.ImageButton(ui.col_rect_mini(0, 5, 1, 1, margin=1, padding=1), self.refresh_image)
-        self.reboot_img_btn.on_clicked.connect(self.reboot_button_click)
-        self.add_child(self.reboot_img_btn)
+        self.change_lxde_img_btn = ui.ImageButton(ui.col_rect_mini(0, 5, 1, 1, margin=1, padding=1), self.refresh_image)
+        self.change_lxde_img_btn.on_clicked.connect(self.change_lxde_btn_click)
+        self.add_child(self.change_lxde_img_btn)
 
     def loaded(self):
         self.ip_label.text = self.get_ip()
@@ -111,20 +111,12 @@ class StartScene(ui.Scene):
     def wifi_button(obj):
         ui.use_scene(1)
 
-    def reboot_button_click(self, btn):
-        self.show_process_message("Reboot...", 2)
+    def change_lxde_btn_click(self, btn):
+        self.show_process_message("Change LXDE...", 2)
         ui.quit()
 
     def shutdown_button_click(self, btn):
-        self.show_process_message("Shutdown...", 2)
-        threading.Timer(2, self.shutdown_process).start()
-        ui.quit()
-        command = "/usr/bin/sudo service lightdm stop"
-        process = Popen(command.split(), stdout=PIPE)
-        output = process.communicate()[0]
-
-    def shutdown_process(self):
-        self.shutdown()
+        ui.use_scene(2)
 
     # Get Your External IP Address
     @staticmethod
@@ -138,22 +130,6 @@ class StartScene(ui.Scene):
         except Exception:
             pass
         return ip_msg
-
-    # Restart Raspberry Pi
-    @staticmethod
-    def restart():
-        command = "/usr/bin/sudo /sbin/shutdown -r now"
-        process = Popen(command.split(), stdout=PIPE)
-        output = process.communicate()[0]
-        return output
-
-    # Shutdown Raspberry Pi
-    @staticmethod
-    def shutdown():
-        command = "/usr/bin/sudo /sbin/shutdown -h now"
-        process = Popen(command.split(), stdout=PIPE)
-        output = process.communicate()[0]
-        return output
 
     @staticmethod
     def search_process():

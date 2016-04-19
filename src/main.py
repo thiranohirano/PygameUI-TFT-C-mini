@@ -9,6 +9,7 @@ import pygame
 import pygameuic as ui  # @UnresolvedImport
 import startui
 import pifiui
+import powerui
 import mytheme
 
 if __name__ == '__main__':
@@ -29,5 +30,6 @@ if __name__ == '__main__':
     mytheme.set_theme()
     ui.append_scene(startui.StartScene())
     ui.append_scene(pifiui.PifiUI())
+    ui.append_scene(powerui.PowerUI())
     ui.use_scene(0)
     ui.run()
