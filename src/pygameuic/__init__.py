@@ -1,5 +1,5 @@
 import pygame
-
+from pygame.locals import *
 from object_rectangle import *
 from label import *
 from button import *
@@ -37,10 +37,13 @@ class SceneManager(object):
         
 scene_manager = SceneManager()
 
-def init(name=' ', window_size=(480, 320), mouse=True):
+def init(name=' ', window_size=(480, 320), mouse=True, fullscreen=False):
     pygame.init()
     global window_surface
-    window_surface = pygame.display.set_mode(window_size)
+    if fullscreen:
+        window_surface = pygame.display.set_mode(window_size, FULLSCREEN)
+    else:
+        window_surface = pygame.display.set_mode(window_size)
     pygame.display.set_caption(name)
     window.rect = pygame.Rect((0, 0), window_size)
     theme.init()

@@ -11,22 +11,21 @@ import startui
 import pifiui
 import mytheme
 
-# os.putenv('SDL_FBDEV', '/dev/fb1')
-# os.putenv('SDL_MOUSEDRV', 'TSLIB')
-# os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
-
 if __name__ == '__main__':
     param = sys.argv
     mouse_flag = True
+    fullscreen = False
     if len(param) > 1:
-        if param[1] == "-tft":
-            os.putenv('SDL_FBDEV', '/dev/fb1')
-            os.putenv('SDL_MOUSEDRV', 'TSLIB')
-            os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
-            mouse_flag = False
+        for arg_param in param:
+            if arg_param == "-tft":
+                mouse_flag = False
+                fullscreen = True
+            if arg_param == "-startup":
+                os.putenv('SDL_FBDEV', '/dev/fb1')
+                os.putenv('SDL_MOUSEDRV', 'TSLIB')
+                os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
 
-    ui.init('pygameui ', (320, 240), mouse_flag)
-#     pygame.mouse.set_visible(False)
+    ui.init('pygameui ', (320, 240), mouse_flag, fullscreen)
     mytheme.set_theme()
     ui.append_scene(startui.StartScene())
     ui.append_scene(pifiui.PifiUI())
