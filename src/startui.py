@@ -13,13 +13,27 @@ from subprocess import PIPE, Popen
 import threading
 import os
 import datetime
+import myfunctions
 
 class StartScene(ui.Scene):
     def __init__(self):
         ui.Scene.__init__(self)
 
-        self.ip_label = ui.Label(ui.col_rect_mini(0, 0, 8, 1), self.get_ip())
+        scriptdir = os.path.dirname(os.path.abspath(__file__))
+        print scriptdir
+        images_folder = "images"
+
+        self.network_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.network.png")).convert_alpha()
+        self.network_imageview = ui.ImageView(ui.col_rect_mini(0, 0, 1, 1, padding=1), self.network_image)
+        self.add_child(self.network_imageview)
+        self.ip_label = ui.Label(ui.col_rect_mini(1, 0, 3, 1), '')
         self.add_child(self.ip_label)
+
+        self.wifi_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.wifi.png")).convert_alpha()
+        self.wifi_imageview = ui.ImageView(ui.col_rect_mini(4, 0, 1, 1, padding=1), self.wifi_image)
+        self.add_child(self.wifi_imageview)
+        self.wifi_ip_label = ui.Label(ui.col_rect_mini(5, 0, 3, 1), '')
+        self.add_child(self.wifi_ip_label)
 
         self.date_label = ui.Label(ui.col_rect_mini(0, 1, 5, 1, padding=2), '', halign=ui.LEFT)
         self.date_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 20)
@@ -51,9 +65,6 @@ class StartScene(ui.Scene):
 
         self.stop_flag = False
 
-        scriptdir = os.path.dirname(os.path.abspath(__file__))
-        print scriptdir
-        images_folder = "images"
         self.power_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.power.png")).convert_alpha()
         self.shutdown_img_btn = ui.ImageButton(ui.col_rect_mini(7, 5, 1, 1, margin=1, padding=1), self.power_image)
         self.shutdown_img_btn.on_clicked.connect(self.shutdown_button_click)
@@ -76,7 +87,14 @@ class StartScene(ui.Scene):
         print "closed"
 
     def show_ip(self):
-        self.ip_label.text = self.get_ip()
+        eth0_ip = myfunctions.get_ip_address('eth0')
+        wlan0_ip = myfunctions.get_ip_address('wlan0')
+        if eth0_ip is None:
+            eth0_ip = "Not connected"
+        if wlan0_ip is None:
+            wlan0_ip = "Not connected"
+        self.ip_label.text = eth0_ip
+        self.wifi_ip_label.text = wlan0_ip
         if not self.stop_flag:
             ip_timer = threading.Timer(2, self.show_ip)
             ip_timer.start()

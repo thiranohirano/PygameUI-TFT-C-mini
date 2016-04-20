@@ -6,24 +6,7 @@ Created on 2016/03/07
 import pygame
 import pygameuic as ui
 import pifi
-import socket
-import fcntl
-import struct
-
-def get_ip_address(ifname):
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        ip_addr = socket.inet_ntoa(fcntl.ioctl(
-            s.fileno(),
-            0x8915,  # SIOCGIFADDR
-            struct.pack('256s', ifname[:15])
-        )[20:24])
-        if ip_addr.startswith('169.254.'):
-            raise Exception()
-        else:
-            return  ip_addr
-    except Exception:
-        return None
+import myfunctions
 
 class PifiUI(ui.Scene):
     '''
@@ -87,7 +70,7 @@ class PifiUI(ui.Scene):
             else: return
             
         self.show_process_spinner(self.generate_process, "Generating Config File...")
-        ip_address = get_ip_address('wlan0')
+        ip_address = myfunctions.get_ip_address('wlan0')
         if ip_address is not None:
             self.show_process_message("Success! IP: %s" % ip_address, 2)
         else:

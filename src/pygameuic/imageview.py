@@ -28,6 +28,7 @@ class ImageView(object_rectangle.ObjectRectangle):
     @image.setter
     def image(self, new_image):
         self._image = new_image
+        self.dirty = True
 
     def render(self):
         if self.content_mode == SCALE_TO_FILL:
