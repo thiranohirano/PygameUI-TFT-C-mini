@@ -20,6 +20,8 @@ def get_ip_address(ifname):
         )[20:24])
         if ip_addr.startswith('169.254.'):
             raise Exception()
+        else:
+            return  ip_addr
     except Exception:
         return None
 
