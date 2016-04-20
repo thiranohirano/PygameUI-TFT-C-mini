@@ -11,12 +11,15 @@ import fcntl
 import struct
 
 def get_ip_address(ifname):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    return socket.inet_ntoa(fcntl.ioctl(
-        s.fileno(),
-        0x8915,  # SIOCGIFADDR
-        struct.pack('256s', ifname[:15])
-    )[20:24])
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        return socket.inet_ntoa(fcntl.ioctl(
+            s.fileno(),
+            0x8915,  # SIOCGIFADDR
+            struct.pack('256s', ifname[:15])
+        )[20:24])
+    except socket.error:
+        return None
 
 class PifiUI(ui.Scene):
     '''
@@ -81,10 +84,11 @@ class PifiUI(ui.Scene):
             
         self.show_process_spinner(self.generate_process, "Generating Config File...")
         ip_address = get_ip_address('wlan0')
-        if not ip_address.startswith('169.154.'):
-            self.show_process_message("Success! IP: %s" % ip_address, 2)
-        else:
-            self.show_process_message("Failed! Check WiFi password", 2)
+        if ip_address is not None:
+            if not ip_address.startswith('169.254.'):
+                self.show_process_message("Success! IP: %s" % ip_address, 2)
+            else:
+                self.show_process_message("Failed! Check WiFi password", 2)
 
     def generate_process(self):
         self.pifi.generateEtcInterfaces()
