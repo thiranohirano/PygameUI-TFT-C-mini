@@ -26,13 +26,15 @@ class StartScene(ui.Scene):
         self.network_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.network.png")).convert_alpha()
         self.network_imageview = ui.ImageView(ui.col_rect_mini(0, 0, 1, 1, padding=1), self.network_image)
         self.add_child(self.network_imageview)
-        self.ip_label = ui.Label(ui.col_rect_mini(1, 0, 3, 1), '')
+        self.ip_label = ui.Label(ui.col_rect_mini(1, 0, 3, 1, padding=1), '')
+        self.ip_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 14)
         self.add_child(self.ip_label)
 
         self.wifi_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.wifi.png")).convert_alpha()
         self.wifi_imageview = ui.ImageView(ui.col_rect_mini(4, 0, 1, 1, padding=1), self.wifi_image)
         self.add_child(self.wifi_imageview)
-        self.wifi_ip_label = ui.Label(ui.col_rect_mini(5, 0, 3, 1), '')
+        self.wifi_ip_label = ui.Label(ui.col_rect_mini(5, 0, 3, 1, padding=1), '')
+        self.wifi_ip_label.font = pygame.font.Font(ui.resource.get_font_path("VL-PGothic-Regular"), 14)
         self.add_child(self.wifi_ip_label)
 
         self.date_label = ui.Label(ui.col_rect_mini(0, 1, 5, 1, padding=2), '', halign=ui.LEFT)

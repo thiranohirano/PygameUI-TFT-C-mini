@@ -1,11 +1,11 @@
 # coding=utf-8
 
 import socket
-import fcntl
 import struct
 
 def get_ip_address(ifname):
     try:
+        import fcntl
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         ip_addr = socket.inet_ntoa(fcntl.ioctl(
             s.fileno(),
