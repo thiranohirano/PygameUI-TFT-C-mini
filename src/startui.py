@@ -89,23 +89,25 @@ class StartScene(ui.Scene):
         print "closed"
 
     def show_ip(self):
-        eth0_ip = myfunctions.get_ip_address('eth0')
-        wlan0_ip = myfunctions.get_ip_address('wlan0')
-        if eth0_ip is None:
-            eth0_ip = "Not connected"
-        if wlan0_ip is None:
-            wlan0_ip = "Not connected"
-        self.ip_label.text = eth0_ip
-        self.wifi_ip_label.text = wlan0_ip
         if not self.stop_flag:
+            eth0_ip = myfunctions.get_ip_address('eth0')
+            wlan0_ip = myfunctions.get_ip_address('wlan0')
+            if eth0_ip is None:
+                eth0_ip = "Not connected"
+            if wlan0_ip is None:
+                wlan0_ip = "Not connected"
+            self.ip_label.text = eth0_ip
+            self.wifi_ip_label.text = wlan0_ip
+
             ip_timer = threading.Timer(2, self.show_ip)
             ip_timer.start()
 
     def show_datetime(self):
-        datetime_now = datetime.datetime.now()
-        self.date_label.text = datetime_now.strftime('%Y/%m/%d[%a]')
-        self.time_label.text = datetime_now.strftime('%H:%M')
         if not self.stop_flag:
+            datetime_now = datetime.datetime.now()
+            self.date_label.text = datetime_now.strftime('%Y/%m/%d[%a]')
+            self.time_label.text = datetime_now.strftime('%H:%M')
+
             datetime_timer = threading.Timer(1, self.show_datetime)
             datetime_timer.start()
 
