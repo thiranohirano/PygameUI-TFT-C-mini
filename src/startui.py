@@ -53,9 +53,9 @@ class StartScene(ui.Scene):
         self.obj_r2.on_clicked.connect(self.hoge2)
         self.add_child(self.obj_r2)
 
-        self.obj_r4 = ui.Button(ui.col_rect_mini(5, 1, 3, 2), 'WiFi')
-        self.obj_r4.on_clicked.connect(self.wifi_button)
-        self.add_child(self.obj_r4)
+        self.wifi_btn = ui.Button(ui.col_rect_mini(5, 1, 3, 2), 'WiFi')
+        self.wifi_btn.on_clicked.connect(self.wifi_button_click)
+        self.add_child(self.wifi_btn)
 
         # self.reboot_btn = ui.Button(ui.col_rect_mini(0, 4, 3, 2), 'Reboot')
         # self.reboot_btn.on_clicked.connect(self.reboot_button_click)
@@ -69,7 +69,7 @@ class StartScene(ui.Scene):
 
         self.power_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.power.png")).convert_alpha()
         self.shutdown_img_btn = ui.ImageButton(ui.col_rect_mini(7, 5, 1, 1, margin=1, padding=1), self.power_image)
-        self.shutdown_img_btn.on_clicked.connect(self.shutdown_button_click)
+        self.shutdown_img_btn.on_clicked.connect(self.power_button_click)
         self.add_child(self.shutdown_img_btn)
 
         self.refresh_image = pygame.image.load(os.path.join(scriptdir, images_folder, "appbar.refresh.png")).convert_alpha()
@@ -117,14 +117,14 @@ class StartScene(ui.Scene):
         print text
 
     @staticmethod
-    def wifi_button(obj):
+    def wifi_button_click(obj):
         ui.use_scene(1)
 
     def change_lxde_btn_click(self, btn):
         self.show_process_message("Change LXDE...", 2)
         ui.quit()
 
-    def shutdown_button_click(self, btn):
+    def power_button_click(self, btn):
         ui.use_scene(2)
 
     # Get Your External IP Address
