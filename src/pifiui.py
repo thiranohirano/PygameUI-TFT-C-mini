@@ -5,9 +5,18 @@ Created on 2016/03/07
 '''
 import pygame
 import pygameuic as ui
-import mycolors
 import pifi
-import time
+import socket
+import fcntl
+import struct
+
+def get_ip_address(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(
+        s.fileno(),
+        0x8915,  # SIOCGIFADDR
+        struct.pack('256s', ifname[:15])
+    )[20:24])
 
 class PifiUI(ui.Scene):
     '''
@@ -71,8 +80,9 @@ class PifiUI(ui.Scene):
             else: return
             
         self.show_process_spinner(self.generate_process, "Generating Config File...")
-        if self.pifi.isConnected():
-            self.show_process_message("Success! IP: %s" % self.pifi.ip, 2)
+        ip_address = get_ip_address('wlan0')
+        if not ip_address.startswith('169.154.'):
+            self.show_process_message("Success! IP: %s" % ip_address, 2)
         else:
             self.show_process_message("Failed! Check WiFi password", 2)
 
