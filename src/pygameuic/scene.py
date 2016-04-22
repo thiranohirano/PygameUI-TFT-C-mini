@@ -7,6 +7,7 @@ from virtualKeyboard import VirtualKeyboard  # @UnresolvedImport
 from colors import black_color  # @UnresolvedImport
 import callback
 import time
+import os
 
 stack = []
 current = None
@@ -73,14 +74,16 @@ class Scene(object):
                         self.minutes = 0
                         self.screen_saver = False
                         self.all_dirty_item()
+                        os.system("/home/pi/backlight.sh on")
                 if e.type == pygame.QUIT:
                     pygame.quit()
                     import sys
                     sys.exit()
-        if self.minutes >= self.screen_saver_time:
+        if self.minutes >= self.screen_saver_time and not self.screen_saver:
             self.screen_saver = True
             self.window_surface.fill(black_color)
             pygame.display.update()
+            os.system("/home/pi/backlight.sh off")
         
     def event_mousedown(self, pos):
         pass

@@ -1,4 +1,5 @@
 import pygame
+import os
 from pygame.locals import *
 from object_rectangle import *
 from label import *
@@ -48,6 +49,7 @@ def init(name=' ', window_size=(480, 320), mouse=True, fullscreen=False):
     window.rect = pygame.Rect((0, 0), window_size)
     theme.init()
     pygame.mouse.set_visible(mouse)
+    os.system("/home/pi/backlight.sh setup")
     
 def quit():
     global ui_quit
