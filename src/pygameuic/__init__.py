@@ -40,6 +40,7 @@ scene_manager = SceneManager()
 
 def init(name=' ', window_size=(480, 320), mouse=True, fullscreen=False):
     pygame.init()
+    pygame.font.init()
     global window_surface
     if fullscreen:
         window_surface = pygame.display.set_mode(window_size, FULLSCREEN)

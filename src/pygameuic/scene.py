@@ -135,7 +135,7 @@ class Scene(object):
         if flag and not self.screen_saver:
             self.window_surface.blit(self.surface, (0, 0))
             pygame.display.update()
-            print 'update'
+            print ('update')
         
     def _unselectall(self):
         for child in self.children:
