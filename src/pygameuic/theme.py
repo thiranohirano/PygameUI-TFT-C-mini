@@ -77,7 +77,7 @@ def init_default_theme():
                       value=gray_color)
     default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=BORDER_WIDTHS_KEY,
-                      value=None)
+                      value=0)
     default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=BORDER_COLOR_KEY,
                       value=None)
@@ -93,7 +93,7 @@ def init_default_theme():
                       value=(6, 6))
     default_theme.set(class_name=LABEL_CLASS,
                       key=BORDER_WIDTHS_KEY,
-                      value=None)
+                      value=0)
     default_theme.set(class_name=LABEL_CLASS,
                       key=FONT_KEY,
                       value=pygame.font.SysFont('Courier New', 22))

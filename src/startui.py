@@ -112,7 +112,8 @@ class StartScene(ui.Scene):
             datetime_timer.start()
 
     def hoge(self, obj):
-        self.show_process_spinner(self.search_process, 'Scanning for WiFi networks...')
+        #self.show_process_spinner(self.search_process, 'Scanning for WiFi networks...')
+        ui.use_scene(3)
 
     def hoge2(self, obj):
         text = self.show_virtual_keyboard()

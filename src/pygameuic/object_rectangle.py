@@ -39,7 +39,11 @@ class ObjectRectangle(object):
             kvc.set_value_for_keypath(self, key, val)
 
     def _draw(self, screen):
-        if not self.dirty: return False
+        if not self.dirty:
+            return False
+
+        self.surface = pygame.Surface((self.rect.w, self.rect.h)).convert()
+
         if self.selected:
             if self.select_background_color is not None:
                 self.surface.fill(self.select_background_color)

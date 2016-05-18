@@ -11,6 +11,7 @@ import startui
 import pifiui
 import powerui
 import mytheme
+import testui
 
 if __name__ == '__main__':
     param = sys.argv
@@ -31,5 +32,6 @@ if __name__ == '__main__':
     ui.append_scene(startui.StartScene())
     ui.append_scene(pifiui.PifiUI())
     ui.append_scene(powerui.PowerUI())
+    ui.append_scene(testui.TestUI())
     ui.use_scene(0)
     ui.run()

@@ -7,17 +7,22 @@ import imageview
 
 class ImageButton(object_rectangle.ObjectRectangle):
 
-    def __init__(self, rect, img):
+    def __init__(self, rect, img, img_rect=None):
         if rect is None:
             rect = pygame.Rect((0, 0), img.get_size())
         elif rect.w == 0 and rect.h == 0:
             rect.size = img.get_size()
 
+        if img_rect is None:
+            img_rect = pygame.Rect((0, 0), rect.size)
+        elif img_rect.w == 0 and img_rect.h == 0:
+            img_rect.size = img.get_size()
+
         object_rectangle.ObjectRectangle.__init__(self, rect)
 
         self.on_clicked = callback.Signal()
 
-        self.image_view = imageview.ImageView(pygame.Rect(0, 0, rect.w, rect.h), img)
+        self.image_view = imageview.ImageView(pygame.Rect(self.rect.w / 2 - img_rect.w / 2, self.rect.h / 2 - img_rect.h / 2, img_rect.w, img_rect.h), img)
         self.image_surface = pygame.Surface((self.rect.w, self.rect.h)).convert()
         self.select_over_surface = pygame.Surface((self.rect.w, self.rect.h)).convert()
         self.select_over_surface.fill(self.select_background_color)
