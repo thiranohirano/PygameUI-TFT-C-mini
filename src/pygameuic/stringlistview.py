@@ -168,4 +168,5 @@ class ScrollStringListView(scroll.ScrollView):
     @string_items.setter
     def string_items(self, new_items):
         self.list_view.string_items = new_items
+        self.content_offset = (0, 0)
 
