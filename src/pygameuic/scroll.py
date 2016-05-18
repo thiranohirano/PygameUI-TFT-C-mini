@@ -77,6 +77,7 @@ class ScrollView(object_rectangle.ObjectRectangle):
         # height = frame.size[1] + SCROLL_BUTTON_HEIGHT * 2
         # rect = pygame.Rect(frame.x, frame.y - SCROLL_BUTTON_HEIGHT, frame.w, height)
         rect = frame
+        self.selected_index = None
         object_rectangle.ObjectRectangle.__init__(self, rect)
 
         self.content_frame = ScrollFrame(pygame.Rect(0, SCROLL_BUTTON_HEIGHT, frame.w, frame.h - SCROLL_BUTTON_HEIGHT * 2), content_view)
@@ -99,7 +100,7 @@ class ScrollView(object_rectangle.ObjectRectangle):
         self.items.append(self.down_btn)
         self.items.append(self.content_frame)
 
-        self.selected_index = None
+        self._selected = False
 
     @property
     def content_offset(self):
@@ -110,6 +111,16 @@ class ScrollView(object_rectangle.ObjectRectangle):
         self._content_offset = new_offset
         self.content_view.rect.topleft = self._content_offset
         self.dirty = True
+
+    @property
+    def selected(self):
+        return self._selected
+
+    @selected.setter
+    def selected(self, value):
+        self._selected = value
+        if not self._selected:
+            self.deselect()
 
     def up(self, btn):
         x, y = self._content_offset
