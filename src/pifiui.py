@@ -58,7 +58,7 @@ class PifiUI(ui.Scene):
                 strength = "L"
             elif ap.signal < -60:
                 strength = "M"
-            aps_list.append(strength + " SSID:" + ap.ssid)
+            aps_list.append("%s SSID:%s" % (strength, ap.ssid))
         self.ap_listview.string_items = aps_list
         
     def ap_selected(self, slv, item, index):
