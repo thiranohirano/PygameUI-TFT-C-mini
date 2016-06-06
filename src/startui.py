@@ -17,7 +17,7 @@ import myfunctions
 
 class StartScene(ui.Scene):
     def __init__(self):
-        ui.Scene.__init__(self)
+        super(self.__class__, self).__init__()
 
         scriptdir = os.path.dirname(os.path.abspath(__file__))
         print scriptdir
@@ -112,8 +112,8 @@ class StartScene(ui.Scene):
             datetime_timer.start()
 
     def hoge(self, obj):
-        #self.show_process_spinner(self.search_process, 'Scanning for WiFi networks...')
-        ui.use_scene(3)
+        self.show_process_spinner(self.search_process, 'Show process spinner test...')
+        #ui.use_scene(3)
 
     def hoge2(self, obj):
         text = self.show_virtual_keyboard()

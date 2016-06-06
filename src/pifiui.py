@@ -7,26 +7,12 @@ import pygame
 import pygameuic as ui
 import pifi
 import myfunctions
+import window_scene
 
-class PifiUI(ui.Scene):
-    '''
-    classdocs
-    '''
+class PifiUI(window_scene.WindowScene):
 
     def __init__(self):
-        '''
-        Constructor
-        '''
-        ui.Scene.__init__(self)
-        # self.main_frame = ui.ObjectRectangle(ui.window.rect)
-        # self.main_frame.enabled = False
-        # self.main_frame.border_color = mycolors.belize_hole
-        # self.main_frame.border_widths = 9
-        # self.add_child(self.main_frame)
-        
-        btn = ui.Button(ui.col_rect_mini(7, 0, 1, 1), 'X')
-        btn.on_clicked.connect(self.back)
-        self.add_child(btn)
+        super(self.__class__, self).__init__()
         
         scan_btn = ui.Button(ui.col_rect_mini(1, 5, 6, 1), 'Scan')
         scan_btn.on_clicked.connect(self.scan)
@@ -42,10 +28,7 @@ class PifiUI(ui.Scene):
         self.add_child(self.ap_listview)
         
         self.pifi = pifi.PiFi()
-        
-    def back(self, btn):
-        ui.use_scene(0)
-        
+
     def scan(self, btn):
         self.show_process_spinner(self.scan_process, "Scanning for WiFi networks...")
         

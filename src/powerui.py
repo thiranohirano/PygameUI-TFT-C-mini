@@ -3,14 +3,11 @@
 import pygameuic as ui
 from subprocess import PIPE, Popen
 import threading
+import window_scene
 
-class PowerUI(ui.Scene):
+class PowerUI(window_scene.WindowScene):
     def __init__(self):
-        ui.Scene.__init__(self)
-
-        btn = ui.Button(ui.col_rect_mini(7, 0, 1, 1), 'X')
-        btn.on_clicked.connect(self.back)
-        self.add_child(btn)
+        super(self.__class__, self).__init__()
 
         self.shutdown_btn = ui.Button(ui.col_rect_mini(2, 1, 4, 2), 'Shutdown')
         self.shutdown_btn.on_clicked.connect(self.shutdown_btn_click)
@@ -19,9 +16,6 @@ class PowerUI(ui.Scene):
         self.reboot_btn = ui.Button(ui.col_rect_mini(2, 3, 4, 2), 'Reboot')
         self.reboot_btn.on_clicked.connect(self.reboot_btn_click)
         self.add_child(self.reboot_btn)
-
-    def back(self, btn):
-        ui.use_scene(0)
 
     def shutdown_btn_click(self, btn):
         self.show_process_message("Shutdown...", 2)
